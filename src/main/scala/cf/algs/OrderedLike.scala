@@ -21,14 +21,4 @@ object OrderedLike {
       a.compareTo(b)
     }
   }
-
-  implicit val orderedInt: OrderedLike[Int] = new OrderedLike[Int] {
-    override def compare(a: Int, b: Int): Int = {
-      // In case overflow happens
-      val r = BigInt(a) - BigInt(b)
-      if (r < 0) return -1
-      else if (r == 0) return 0
-      else return 1
-    }
-  }
 }
