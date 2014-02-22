@@ -11,12 +11,6 @@ object ShellSortApp extends App {
   //val input = "1".toCharArray
   val input = "1324".toCharArray
 
-  /*
-  val ss = new ShellSortByOrdering[Char]
-  ss.sort(input)
-  println(s"${input.mkString(", ")}")
-  */
-
 
   import OrderedLike._
   val st = new ShellSort
@@ -44,11 +38,15 @@ trait InsertionSort extends Shuffle {
 
   def sortByOrdering[T](arr: IndexedSeq[T])
                        (implicit od: Ordering[T]): Unit = {
-    sortByOrdering(arr, 0, arr.length - 1)
+    if (arr.length > 1) {
+      sortByOrdering(arr, 0, arr.length - 1)
+    }
   }
 
   def sort[T: OrderedLike](arr: IndexedSeq[T]): Unit = {
-    sort(arr, 0, arr.length - 1)
+    if (arr.length > 1) {
+      sort(arr, 0, arr.length - 1)
+    }
   }
 
   def sort[T: OrderedLike](arr: IndexedSeq[T], lo: Int, hi: Int,
