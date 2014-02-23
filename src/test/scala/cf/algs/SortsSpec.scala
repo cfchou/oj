@@ -10,6 +10,54 @@ import org.scalatest.prop.PropertyChecks
  */
 class SortsSpec extends WordSpec with PropertyChecks with Matchers {
 
+  "In QuickSort, " when {
+    val qs = new QuickSort
+    "partition Array(2, 1)" should {
+      "return 1 and change to Array(1, 2)" in {
+        val noo = Array(2, 1)
+        val mid = qs.partition(noo, 0, 1)
+        println(s"$mid -- ${noo.mkString(", ")}")
+        assert(mid === 1)
+      }
+    }
+    "partition Array(1, 2)" should {
+      "return 0 and doesn't change Array" in {
+        val noo = Array(1, 2)
+        val mid = qs.partition(noo, 0, 1)
+        println(s"$mid -- ${noo.mkString(", ")}")
+        assert(mid === 0)
+      }
+    }
+
+    "partition Array(0, 0)" should {
+      "return 0 and doesn't change Array" in {
+        val noo = Array(0, 0)
+        val mid = qs.partition(noo, 0, 1)
+        println(s"$mid -- ${noo.mkString(", ")}")
+        assert(mid === 0)
+      }
+    }
+
+    "sort Array(0, 0)" should {
+      "return Array(0, 0)" in {
+        val noo = Array(0, 0)
+        qs.sort(noo, 0, 1)
+        println(s"${noo.mkString(", ")}")
+      }
+    }
+
+    "arrays of Int" should {
+      "be sorted" in {
+        forAll { input: Array[Int] =>
+          val ans = input.sorted
+          qs.sort(input)
+          assert(input === ans)
+        }
+      }
+    }
+  }
+
+
   "MergeSort" when {
     val ms = new MergeSort
     "seeing a empty input" should {
