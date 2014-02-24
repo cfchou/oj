@@ -2,6 +2,7 @@ package cf.algs
 
 import org.scalatest.{WordSpec, Matchers}
 import org.scalatest.prop.PropertyChecks
+import org.scalacheck.Gen
 
 /**
  * Created with IntelliJ IDEA.
@@ -9,6 +10,33 @@ import org.scalatest.prop.PropertyChecks
  * Date: 22/02/2014
  */
 class SortsSpec extends WordSpec with PropertyChecks with Matchers {
+  "In Selection" when {
+    val sl = new Selection
+
+    "select 1th of 4 2 5 7 1" should {
+      "be 1" in {
+        val noo = Array(4, 2, 5, 7, 1)
+        val r = sl.select(noo, 1)
+        println(s"$r")
+      }
+    }
+
+    "select by a random rank from a random series of Int" should {
+      "return the element in question" in {
+        //val gen = Gen.listOf1({ Gen.choose(Int.MinValue, Int.MaxValue) })
+        val gen = Gen.containerOf1[Array, Int]({
+          Gen.choose(Int.MinValue, Int.MaxValue)
+        })
+        forAll (gen) { input: Array[Int] =>
+          val rank = 1 + util.Random.nextInt(input.length)
+          val ans = input.sorted.apply(rank - 1)
+          val r = sl.select(input, rank)
+          assert(r === ans)
+        }
+      }
+    }
+
+  }
 
   "In QuickSort, " when {
     val qs = new QuickSort
@@ -127,5 +155,7 @@ class SortsSpec extends WordSpec with PropertyChecks with Matchers {
         }
       }
     }
+
   }
+
 }
