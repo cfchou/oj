@@ -21,7 +21,8 @@ class Selection extends Shuffle {
     if (hi == lo) {
       arr(hi)
     } else {
-      val mid = partition(arr, lo, hi)
+      //val mid = partition(arr, lo, hi)
+      val mid = (new QuickSort).partition3(arr, lo, hi)
       val midRank = mid - lo + 1
       if (midRank == rank) {
         arr(mid)
@@ -31,16 +32,6 @@ class Selection extends Shuffle {
         select(arr, rank - midRank, mid + 1, hi)
       }
     }
-  }
-
-  /* QuickSort.partition doesn't guarantee that everything to the left of
-   * returned pivot is strictly smaller than arr(pivot), but partition here
-   * would do by moving the pivot leftwards as much as it should.
-   */
-  def partition[T](arr: IndexedSeq[T], lo: Int, hi: Int)
-                  (implicit od: OrderedLike[T]): Int = {
-    val mid = (new QuickSort).partition(arr, lo, hi)
-    (mid to lo by -1).takeWhile({ i => arr(mid) == arr(i) }).last
   }
 
 }
