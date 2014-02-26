@@ -11,9 +11,11 @@ import collection.mutable.IndexedSeq
 trait Shuffle {
 
   def swap[T](arr: IndexedSeq[T], i: Int, j: Int): Unit = {
-    val tmp = arr(i)
-    arr(i) = arr(j)
-    arr(j) = tmp
+    if (i != j) {
+      val tmp = arr(i)
+      arr(i) = arr(j)
+      arr(j) = tmp
+    }
   }
 
   def shuffle[T](arr: IndexedSeq[T]): Unit = {
